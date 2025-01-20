@@ -4,33 +4,17 @@ from .base import *  # noqa
 
 USER_AGENT = "City Scrapers [production mode]. Learn more and say hello at https://citybureau.org/city-scrapers"  # noqa
 
-# Uncomment one of the following DiffPipeline classes to enable a diff pipeline that
-# will deduplicate output UIDs based on City Scrapers IDs and list any meetings in the
-# future which no longer appear in scraped results as cancelled.
-
 # Configure item pipelines
 ITEM_PIPELINES = {
-    # "city_scrapers_core.pipelines.S3DiffPipeline": 200,
-    # "city_scrapers_core.pipelines.AzureDiffPipeline": 200,
-    # "city_scrapers_core.pipelines.GCSDiffPipeline": 200,
+    "city_scrapers_core.pipelines.AzureDiffPipeline": 200,
     "city_scrapers_core.pipelines.MeetingPipeline": 300,
     "city_scrapers_core.pipelines.OpenCivicDataPipeline": 400,
 }
 
-# Uncomment one of the StatusExtension classes to write an SVG badge of each scraper's
-# status to Azure, S3, or GCS after each time it's run.
-
-# By default, this will write to the same bucket or container as the feed export, but
-# this can be configured by adding a value in:
-# CITY_SCRAPERS_STATUS_BUCKET for S3 or GCS, or
-# CITY_SCRAPERS_STATUS_CONTAINER for Azure.
-
 SENTRY_DSN = os.getenv("SENTRY_DSN")
 
 EXTENSIONS = {
-    # "city_scrapers_core.extensions.AzureBlobStatusExtension": 100,
-    # "city_scrapers_core.extensions.S3StatusExtension": 100,
-    # "city_scrapers_core.extensions.GCSStatusExtension": 100,
+    "city_scrapers_core.extensions.AzureBlobStatusExtension": 100,
     "scrapy_sentry_errors.extensions.Errors": 10,
     "scrapy.extensions.closespider.CloseSpider": None,
 }
